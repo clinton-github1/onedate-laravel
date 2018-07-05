@@ -10,10 +10,4 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    
-    
-    
-    
-$data = DB::table('petitions')->where('id','3')->first();
-return View::make('eng/signatures',['data'=>$data->info]);
 }

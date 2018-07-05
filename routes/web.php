@@ -16,17 +16,22 @@ use App\Petition;
 use Illuminate\Http\Request;
 use App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+
+    
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 
+//--------------------------------------------------------------------------------------------
 
-Route::get("/signatures", function()
-{
-	
-	$users = Petition::all();
+Route::get('my-captcha', 'HomeController@myCaptcha')->name('myCaptcha');
+Route::post('my-captcha', 'HomeController@myCaptchaPost')->name('myCaptcha.post');
+Route::get('refresh_captcha', 'HomeController@refreshCaptcha')->name('refresh_captcha');
 
-	return View::make("eng.signatures")->with("allUsers", $users);
+//--------------------------------------------------------------------------------------------
 
-});
 
 
 /*  */
@@ -35,6 +40,7 @@ Route::get("/signatures", function()
             'name' => 'required|max:255',
             'email' => 'required|max:255',
             'message' => 'required|max:1000',
+            'captcha' => 'required|captcha',
         ]);
 
         if ($validator->fails()) {
@@ -47,6 +53,7 @@ Route::get("/signatures", function()
         $cont->Name = $request->name;
         $cont->Email = $request->email;
         $cont->Message = $request->message;
+        $cont->Captcha = $request->captcha;
         $cont->save();
 
         return redirect()->back()->with('message' , 'SUBMITTED SUCCESSFULLY.');
@@ -56,11 +63,12 @@ Route::get("/signatures", function()
 
 Route::post('/petition', function (Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'email' => 'required|max:255',
-            'city' => 'required|max:255',
-            'country' => 'required|max:255',
-            'progress' => 'required|max:255',
+            'name' => 'required|min:2|max:100',
+            'email' => 'required|email|unique:petitions,email',
+            'city' => 'required|min:2|max:100',
+            'country' => 'required|min:2|max:100',
+            'progress' => 'required|min:2|max:100',
+            'captcha' => 'required|captcha',
         ]);
 
         if ($validator->fails()) {
@@ -75,6 +83,7 @@ Route::post('/petition', function (Request $request) {
         $pet->City = $request->city;
         $pet->Country = $request->country;
         $pet->Progress = 'Checked';
+        $pet->Captcha = $request->captcha;
         $pet->save();
 
         return redirect()->back()->with('message-petition' , 'SUBMITTED SUCCESSFULLY.');
@@ -92,10 +101,10 @@ Route::get('/', function () {
 ENGLISH TRANSLATION ROUTES
 -------------------------------------------------------------------------------------------
 */
+
 Route::get('/index', function () {
     return view('index');
 });
-
 
 
 Route::get('/diff-dates', function () {
@@ -134,7 +143,7 @@ Route::get('/petition-kit', function () {
     return view('eng/petition-kit');
 });
 
-Route::get('/signatures', function () {
+Route::get('/signatures', 'DatabaseController@index', function () {
     return view('eng/signatures');
 });
 
@@ -188,7 +197,7 @@ Route::get('/ch-petition-kit', function () {
     return view('chin/petition-kit');
 });
 
-Route::get('/ch-signatures', function () {
+Route::get('/ch-signatures','chinController@index',  function () {
     return view('chin/signatures');
 });
 
@@ -241,7 +250,7 @@ Route::get('/cz-petition-kit', function () {
     return view('czech/petition-kit');
 });
 
-Route::get('/cz-signatures', function () {
+Route::get('/cz-signatures','czechController@index', function () {
     return view('czech/signatures');
 });
 
@@ -295,7 +304,7 @@ Route::get('/dan-petition-kit', function () {
     return view('dan/petition-kit');
 });
 
-Route::get('/dan-signatures', function () {
+Route::get('/dan-signatures','danController@index', function () {
     return view('dan/signatures');
 });
 
@@ -348,7 +357,7 @@ Route::get('/deu-petition-kit', function () {
     return view('deu/petition-kit');
 });
 
-Route::get('/deu-signatures', function () {
+Route::get('/deu-signatures','deuController@index', function () {
     return view('deu/signatures');
 });
 
@@ -408,7 +417,7 @@ Route::get('/esp-petition-kit', function () {
     return view('esp/petition-kit');
 });
 
-Route::get('/esp-signatures', function () {
+Route::get('/esp-signatures', 'espController@index', function () {
     return view('esp/signatures');
 });
 
@@ -465,7 +474,7 @@ Route::get('/fr-petition-kit', function () {
     return view('fran/petition-kit');
 });
 
-Route::get('/fr-signatures', function () {
+Route::get('/fr-signatures', 'franController@index', function () {
     return view('fran/signatures');
 });
 
@@ -518,7 +527,7 @@ Route::get('/gre-petition-kit', function () {
     return view('gre/petition-kit');
 });
 
-Route::get('/gre-signatures', function () {
+Route::get('/gre-signatures', 'greController@index', function () {
     return view('gre/signatures');
 });
 
@@ -571,7 +580,7 @@ Route::get('/hung-petition-kit', function () {
     return view('hung/petition-kit');
 });
 
-Route::get('/hung-signatures', function () {
+Route::get('/hung-signatures', 'hungController@index', function () {
     return view('hung/signatures');
 });
 
@@ -624,7 +633,7 @@ Route::get('/ita-petition-kit', function () {
     return view('ita/petition-kit');
 });
 
-Route::get('/ita-signatures', function () {
+Route::get('/ita-signatures', 'itaController@index', function () {
     return view('ita/signatures');
 });
 
@@ -677,7 +686,7 @@ Route::get('/jap-petition-kit', function () {
     return view('jap/petition-kit');
 });
 
-Route::get('/jap-signatures', function () {
+Route::get('/jap-signatures', 'japController@index', function () {
     return view('jap/signatures');
 });
 
@@ -730,7 +739,7 @@ Route::get('/ned-petition-kit', function () {
     return view('ned/petition-kit');
 });
 
-Route::get('/ned-signatures', function () {
+Route::get('/ned-signatures', 'nedController@index', function () {
     return view('ned/signatures');
 });
 
@@ -784,7 +793,7 @@ Route::get('/pol-petition-kit', function () {
     return view('pol/petition-kit');
 });
 
-Route::get('/pol-signatures', function () {
+Route::get('/pol-signatures', 'polController@index', function () {
     return view('pol/signatures');
 });
 
@@ -837,7 +846,7 @@ Route::get('/por-petition-kit', function () {
     return view('por/petition-kit');
 });
 
-Route::get('/por-signatures', function () {
+Route::get('/por-signatures', 'porController@index', function () {
     return view('por/signatures');
 });
 
@@ -890,7 +899,7 @@ Route::get('/rus-petition-kit', function () {
     return view('rus/petition-kit');
 });
 
-Route::get('/rus-signatures', function () {
+Route::get('/rus-signatures', 'rusController@index', function () {
     return view('rus/signatures');
 });
 

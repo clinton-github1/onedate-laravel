@@ -9,7 +9,5 @@ class Petition extends Model
     
     public $timestamps = false;
    
-    $data=DB::table(‘petitions’)->get();
-     return $data;
     //
 }

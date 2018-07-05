@@ -497,3 +497,15 @@ input[type=submit]:hover {
     text-align: center;
     margin: auto;
 }
+
+
+.sig-tables table{
+    
+    width: 90%;
+    margin: auto;
+}
+
+.sig-tables th{
+    
+    text-align: left;
+}

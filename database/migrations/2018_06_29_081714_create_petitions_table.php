@@ -20,6 +20,7 @@ class CreatePetitionsTable extends Migration
             $table->string('City');
             $table->string('Country');
             $table->string('Progress');
+            $table->string('Captcha');
         });
     }
 

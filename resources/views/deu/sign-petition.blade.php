@@ -49,7 +49,18 @@ und an alle Kirchenführer</div>
             <input type="text" name="city" placeholder="enter current city" value="{{ old('City') }}" required><br>
             <label for="country">Land:</label><br>
             <input type="text" name="country" placeholder="enter your country" value="{{ old('Country') }}" required><br>
-            <input type="checkbox" name="progress" value="checked" required checked> Kreuzt bitte nebenstehendes Feld an, wenn ihr wünscht über den Fortschritt der Petition informiert zu werden<br><br>
+            <input type="checkbox" name="progress" value="checked" required checked> Kreuzt bitte nebenstehendes Feld an, wenn ihr wünscht über den Fortschritt der Petition informiert zu werden<br>
+            
+            <span>{!! captcha_img() !!}</span>
+              <button type="button" class="btn btn-success btn-refresh"><i class="fa fa-refresh"></i></button>
+
+              <input id="captcha" type="text" class="form-control"  name="captcha" value="{{ old('Captcha') }}"><br>
+            
+                        @if ($errors->has('captcha'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('captcha') }}</strong>
+                              </span>
+                          @endif
 <!--
             <label for="country">Verify:</label><br>
             <input type="text" name="verify" placeholder="enter contents of the image" required><br>

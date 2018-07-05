@@ -27,6 +27,17 @@
             <input type="email" name="email" placeholder="enter valid email address"  value="{{ old('Email') }}" required><br>
             <label for="message">Mensagem:</label><br>
             <textarea maxlength="100000" id="message" name="message" placeholder="Write something.." style="height:18%" required>{{ old('Message') }}</textarea>
+            
+            <span>{!! captcha_img() !!}</span>
+              <button type="button" class="btn btn-success btn-refresh"><i class="fa fa-refresh"></i></button>
+
+              <input id="captcha" type="text" class="form-control"  name="captcha" value="{{ old('Captcha') }}"><br>
+            
+                        @if ($errors->has('captcha'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('captcha') }}</strong>
+                              </span>
+                          @endif
 <!--
             <label for="verify">Verify:</label><br>
             <input type="text" name="verify" placeholder="enter contents of the image" required><br>

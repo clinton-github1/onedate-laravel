@@ -555,6 +555,12 @@
 	height: 100px;
 }
     
+     .sig-tables table{
+    
+    font-size: 60%;
+}
+  
+    
     .endorse-full-img{
     
     width: 80%;
@@ -707,5 +713,6 @@ header{
     width: 100%;
     height: 40%;
 }
-  
+    
+   
 }

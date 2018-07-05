@@ -3,6 +3,7 @@
     <head>
       <title>Единый день Пасхи</title>
         
+        <link rel="icon" href="{{ URL::asset('images/crown.ico') }}"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css2/others/grid.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css2/others/normalize.css') }}">

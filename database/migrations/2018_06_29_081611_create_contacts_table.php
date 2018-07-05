@@ -18,6 +18,7 @@ class CreateContactsTable extends Migration
             $table->string('Name');
             $table->string('Email');
             $table->string('Message');
+            $table->string('Captcha');
         });
     }
 

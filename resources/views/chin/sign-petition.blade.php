@@ -50,7 +50,17 @@
             <input type="text" name="city" value="{{ old('City') }}"  required><br>
             <label for="country">國家:</label><br>
             <input type="text" name="country" value="{{ old('Country') }}"  required><br>
-            <input type="checkbox" name="progress" value="checked" required checked> 假如您希望收到這請願後續發展的通知，請勾選<br><br>
+            <input type="checkbox" name="progress" value="checked" required checked> 假如您希望收到這請願後續發展的通知，請勾選<br>
+            <span>{!! captcha_img() !!}</span>
+              <button type="button" class="btn btn-success btn-refresh"><i class="fa fa-refresh"></i></button>
+
+              <input id="captcha" type="text" class="form-control"  name="captcha" value="{{ old('Captcha') }}"><br>
+            
+                        @if ($errors->has('captcha'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('captcha') }}</strong>
+                              </span>
+                          @endif
 <!--
             <label for="country">Verify:</label><br>
             <input type="text" name="verify" placeholder="enter contents of the image" required><br>

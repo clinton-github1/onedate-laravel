@@ -51,7 +51,18 @@
             <input type="text" name="city" placeholder="enter current city" value="{{ old('City') }}" required><br>
             <label for="country">Ország:</label><br>
             <input type="text" name="country" placeholder="enter your country" value="{{ old('Country') }}" required><br>
-            <input type="checkbox" name="progress" value="checked" required checked> Szeretnék tájékoztatást kapni a kezdeményezés alakulásáról.<br><br>
+            <input type="checkbox" name="progress" value="checked" required checked> Szeretnék tájékoztatást kapni a kezdeményezés alakulásáról.<br>
+            
+            <span>{!! captcha_img() !!}</span>
+              <button type="button" class="btn btn-success btn-refresh"><i class="fa fa-refresh"></i></button>
+
+              <input id="captcha" type="text" class="form-control"  name="captcha" value="{{ old('Captcha') }}"><br>
+            
+                        @if ($errors->has('captcha'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('captcha') }}</strong>
+                              </span>
+                          @endif
 <!--
             <label for="country">Verify:</label><br><input type="submit" value="Szavazok">
             <input type="text" name="verify" placeholder="enter contents of the image" required><br>
